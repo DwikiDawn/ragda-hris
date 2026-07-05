@@ -1,33 +1,76 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ragda-primary: #0f172a;
-  --color-ragda-secondary: #1e293b;
+  --color-ragda-primary: #08090a;
+  --color-ragda-secondary: #0f1011;
+  --color-ragda-surface: #191a1b;
+  --color-ragda-surface-hover: rgba(255, 255, 255, 0.04);
   --color-ragda-accent: #f59e0b;
   --color-ragda-accent-hover: #d97706;
   --color-ragda-success: #10b981;
   --color-ragda-danger: #ef4444;
-  --color-ragda-card: #1e293b;
-  --color-ragda-border: #334155;
-  --color-ragda-light: #f8fafc;
-  --color-ragda-text-light: #f1f5f9;
-  --color-ragda-text-dark: #64748b;
+  --color-ragda-text-primary: #f7f8f8;
+  --color-ragda-text-secondary: #d0d6e0;
+  --color-ragda-text-muted: #8a8f98;
+  --color-ragda-text-subtle: #62666d;
+  --color-ragda-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-ragda-border-standard: rgba(255, 255, 255, 0.08);
 }
 
 body {
   background-color: var(--color-ragda-primary);
-  color: var(--color-ragda-text-light);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  overflow-x: hidden;
+  color: var(--color-ragda-text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: "cv01", "ss03";
+  letter-spacing: -0.01em;
+}
+
+/* Typography Overrides */
+.display-title {
+  letter-spacing: -0.04em;
+  font-weight: 510;
+  line-height: 1.1;
+}
+
+.heading-title {
+  letter-spacing: -0.02em;
+  font-weight: 590;
+  line-height: 1.2;
+}
+
+/* Translucent Cards & Surfaces */
+.glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-ragda-border-standard);
+  backdrop-filter: blur(10px);
+}
+
+.glass-card-subtle {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--color-ragda-border-subtle);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-ragda-border-standard);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-input:focus {
+  border-color: var(--color-ragda-accent);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 0 1px var(--color-ragda-accent);
+  outline: none;
+}
+
+/* Subtle Inset Shadows for Recessed Panels */
+.inset-panel {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: var(--color-ragda-primary); }
-::-webkit-scrollbar-thumb { background: var(--color-ragda-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--color-ragda-border-standard); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-ragda-accent); }
-
-/* Animation overrides */
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}

@@ -1,199 +1,196 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
-import { CheckCircle2, XCircle, FileText, Briefcase, Users, CalendarRange, Clock, Search } from 'lucide-react';
+import { CheckCircle2, XCircle, FileText, Briefcase, Users, CalendarRange, Clock, Search, ShieldAlert, MessageSquare } from 'lucide-react';
 
 export default function AdminApproval() {
-  const { currentUser, employees, leaves, travels, processApproval } = useApp();
-  const [activeTab, setActiveTab] = useState('leaves'); // leaves or travels
-  const [feedbackNote, setFeedbackNote] = useState('');
-  const [activeRequestId, setActiveRequestId] = useState(null);
+  const { currentUser, leaves, travels, approveLeave, rejectLeave, approveTravel, rejectTravel } = useApp();
+  const [filterType, setFilterType] = useState('All'); // All, Leaves, Travels
+  const [feedback, setFeedback] = useState({});
 
-  const pendingLeaves = useMemo(() => {
-    return leaves
-      .filter(l => l.status === 'Pending')
-      .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
-  }, [leaves]);
+  const pendingLeaves = useMemo(() => leaves.filter(l => l.status === 'Pending'), [leaves]);
+  const pendingTravels = useMemo(() => travels.filter(t => t.status === 'Pending'), [travels]);
 
-  const pendingTravels = useMemo(() => {
-    return travels
-      .filter(t => t.status === 'Pending')
-      .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
-  }, [travels]);
-
-  const getEmployeeName = (id) => {
-    const emp = employees.find(e => e.id === id);
-    return emp ? `${emp.name} (${emp.position})` : id;
+  const handleApproveLeave = (id) => {
+    approveLeave(id, currentUser.name, feedback[id] || '');
+    setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
-  const handleAction = (type, requestId, action) => {
-    processApproval(type, requestId, action, feedbackNote);
-    setFeedbackNote('');
-    setActiveRequestId(null);
+  const handleRejectLeave = (id) => {
+    rejectLeave(id, currentUser.name, feedback[id] || '');
+    setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
-  const formatRupiah = (val) => {
-    if (!val) return 'Rp 0';
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency', currency: 'IDR', minimumFractionDigits: 0
-    }).format(val);
+  const handleApproveTravel = (id) => {
+    approveTravel(id, currentUser.name, feedback[id] || '');
+    setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
-  if (currentUser.role !== 'HR/Manager') {
-    return (
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-12 text-center text-slate-400">
-        <Users className="w-16 h-16 text-rose-500/20 mx-auto mb-4" />
-        <h3 className="text-lg font-bold text-white">Akses Ditolak</h3>
-        <p className="text-xs text-slate-500 mt-1">Halaman ini hanya dapat diakses oleh peran HRD atau Manager (seperti Dwiki Darmawan).</p>
-        <p className="text-[10px] text-amber-500 font-semibold mt-4">Pilih profile 'Dwiki Darmawan' di menu kiri untuk mencoba portal approval ini.</p>
-      </div>
-    );
-  }
+  const handleRejectTravel = (id) => {
+    rejectTravel(id, currentUser.name, feedback[id] || '');
+    setFeedback(prev => ({ ...prev, [id]: '' }));
+  };
+
+  const handleFeedbackChange = (id, text) => {
+    setFeedback(prev => ({ ...prev, [id]: text }));
+  };
+
+  // Combine items for a unified approval list
+  const approvalItems = useMemo(() => {
+    const items = [];
+    if (filterType === 'All' || filterType === 'Leaves') {
+      pendingLeaves.forEach(l => items.push({ ...l, category: 'Leave' }));
+    }
+    if (filterType === 'All' || filterType === 'Travels') {
+      pendingTravels.forEach(t => items.push({ ...t, category: 'Travel' }));
+    }
+    // Sort by timestamp if available or just ID
+    return items.sort((a, b) => b.id.localeCompare(a.id));
+  }, [pendingLeaves, pendingTravels, filterType]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 max-w-6xl mx-auto">
       {/* Header */}
-      <div>
-        <h2 className="text-xl font-extrabold text-white">Portal Approval HRD & Manager</h2>
-        <p className="text-xs text-slate-500 mt-1">Kelola dan setujui pengajuan cuti, sakit, izin, dan dinas luar kota karyawan Ragdalion</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-xl font-extrabold text-white tracking-tight heading-title">Portal Approval HR & Manager</h2>
+          <p className="text-xs text-ragda-text-muted mt-1">Otorisasi dan persetujuan pengajuan perizinan/cuti serta dinas luar karyawan</p>
+        </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex border-b border-slate-800">
-        <button
-          onClick={() => { setActiveTab('leaves'); setActiveRequestId(null); }}
-          className={`flex items-center gap-2 px-6 py-3 font-semibold text-sm border-b-2 transition-all ${
-            activeTab === 'leaves'
-              ? 'border-amber-500 text-amber-500'
-              : 'border-transparent text-slate-400 hover:text-white'
-          }`}
-        >
-          <CalendarRange className="w-4 h-4" />
-          Pengajuan Cuti / Izin ({pendingLeaves.length})
-        </button>
-        <button
-          onClick={() => { setActiveTab('travels'); setActiveRequestId(null); }}
-          className={`flex items-center gap-2 px-6 py-3 font-semibold text-sm border-b-2 transition-all ${
-            activeTab === 'travels'
-              ? 'border-amber-500 text-amber-500'
-              : 'border-transparent text-slate-400 hover:text-white'
-          }`}
-        >
-          <Briefcase className="w-4 h-4" />
-          Perjalanan Dinas ({pendingTravels.length})
-        </button>
+      {/* Stats Board */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="glass-card rounded-2xl p-5 flex items-center justify-between shadow-lg">
+          <div className="space-y-1">
+            <span className="text-[10px] text-ragda-text-muted uppercase font-extrabold tracking-wider">Menunggu Persetujuan</span>
+            <p className="text-2xl font-black text-white leading-none font-mono mt-2">{pendingLeaves.length + pendingTravels.length}</p>
+          </div>
+          <div className="p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-2xl">
+            <Clock className="w-5 h-5" />
+          </div>
+        </div>
+
+        <div className="glass-card rounded-2xl p-5 flex items-center justify-between shadow-lg">
+          <div className="space-y-1">
+            <span className="text-[10px] text-ragda-text-muted uppercase font-extrabold tracking-wider">Pengajuan Izin/Cuti</span>
+            <p className="text-2xl font-black text-white leading-none font-mono mt-2">{pendingLeaves.length}</p>
+          </div>
+          <div className="p-3 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-2xl">
+            <CalendarRange className="w-5 h-5" />
+          </div>
+        </div>
+
+        <div className="glass-card rounded-2xl p-5 flex items-center justify-between shadow-lg">
+          <div className="space-y-1">
+            <span className="text-[10px] text-ragda-text-muted uppercase font-extrabold tracking-wider">Pengajuan Dinas</span>
+            <p className="text-2xl font-black text-white leading-none font-mono mt-2">{pendingTravels.length}</p>
+          </div>
+          <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-2xl">
+            <Briefcase className="w-5 h-5" />
+          </div>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-lg">
-        {activeTab === 'leaves' ? (
-          <div>
-            <h3 className="font-extrabold text-white text-md mb-4">Persetujuan Cuti, Sakit & Izin</h3>
+      {/* Filter Tabs */}
+      <div className="flex gap-2 border-b border-ragda-border-subtle pb-4">
+        {['All', 'Leaves', 'Travels'].map(tab => (
+          <button
+            key={tab}
+            onClick={() => setFilterType(tab)}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              filterType === tab
+                ? 'bg-amber-500 text-slate-950 shadow-md'
+                : 'text-ragda-text-muted hover:bg-ragda-surface-hover hover:text-white'
+            }`}
+          >
+            {tab === 'All' ? 'Semua Pengajuan' : tab === 'Leaves' ? 'Izin & Cuti' : 'Perjalanan Dinas'}
+          </button>
+        ))}
+      </div>
 
-            {pendingLeaves.length === 0 ? (
-              <div className="p-12 text-center text-slate-500">
-                <CheckCircle2 className="w-12 h-12 text-emerald-500/20 mx-auto mb-3" />
-                <p className="font-semibold text-sm">Semua pengajuan cuti sudah diproses!</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {pendingLeaves.map(leave => (
-                  <div key={leave.id} className="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row justify-between md:items-center gap-4">
-                    <div>
-                      <span className="text-[10px] bg-amber-500/10 text-amber-500 font-bold border border-amber-500/20 px-2 py-0.5 rounded-full">{leave.type}</span>
-                      <h4 className="font-bold text-white text-sm mt-2">{getEmployeeName(leave.employeeId)}</h4>
-                      <p className="text-xs text-slate-400 mt-1">Alasan: {leave.reason}</p>
-                      <p className="text-[10px] text-slate-500 mt-1 font-mono">Durasi: {leave.startDate} s/d {leave.endDate} ({leave.totalDays} hari)</p>
+      {/* Main List */}
+      <div className="glass-card rounded-3xl p-6 shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-slate-800/10 rounded-full blur-2xl"></div>
+
+        <div className="space-y-6">
+          <h3 className="text-sm font-extrabold text-white uppercase tracking-widest flex items-center gap-2">
+            <ShieldAlert className="w-4.5 h-4.5 text-amber-500 animate-pulse-slow" />
+            Daftar Antrean Persetujuan
+          </h3>
+
+          {approvalItems.length === 0 ? (
+            <div className="py-20 text-center text-ragda-text-muted">
+              <CheckCircle2 className="w-12 h-12 text-slate-700 mx-auto mb-3" />
+              <p className="font-semibold text-xs">Semua pengajuan telah diproses. Bersih!</p>
+            </div>
+          ) : (
+            <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+              {approvalItems.map(item => (
+                <div key={item.id} className="bg-slate-950/40 border border-ragda-border-subtle rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-200 hover:border-ragda-border-standard">
+                  <div className="space-y-3 flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <span className="text-[10px] font-extrabold uppercase bg-slate-900 border border-ragda-border-standard px-2.5 py-1 rounded-md text-white">
+                        {item.category === 'Leave' ? `Leave: ${item.type}` : 'Travel'}
+                      </span>
+                      <span className="text-xs text-white font-extrabold">{item.employeeName}</span>
+                      <span className="text-[10px] text-ragda-text-muted">({item.employeeId})</span>
                     </div>
 
-                    <div className="flex flex-col gap-2 shrink-0">
-                      {activeRequestId === leave.id ? (
-                        <div className="flex flex-col gap-2">
-                          <input
-                            type="text"
-                            placeholder="Tulis catatan feedback..."
-                            value={feedbackNote}
-                            onChange={e => setFeedbackNote(e.target.value)}
-                            className="bg-slate-900 border border-slate-700 text-xs text-white rounded-lg px-3 py-1.5 focus:outline-none focus:border-amber-500"
-                          />
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => handleAction('leave', leave.id, 'Approved')}
-                              className="flex-1 bg-emerald-500 text-slate-950 font-bold text-xs py-1.5 px-3 rounded-lg hover:bg-emerald-600 transition-colors"
-                            >
-                              Approve
-                            </button>
-                            <button
-                              onClick={() => handleAction('leave', leave.id, 'Rejected')}
-                              className="flex-1 bg-rose-500 text-white font-bold text-xs py-1.5 px-3 rounded-lg hover:bg-rose-600 transition-colors"
-                            >
-                              Reject
-                            </button>
-                            <button
-                              onClick={() => setActiveRequestId(null)}
-                              className="bg-slate-800 text-slate-400 text-xs py-1.5 px-2.5 rounded-lg hover:bg-slate-700 transition-colors"
-                            >
-                              Batal
-                            </button>
-                          </div>
-                        </div>
+                    <div className="space-y-1">
+                      {item.category === 'Leave' ? (
+                        <p className="text-xs text-ragda-text-secondary leading-relaxed">
+                          Mengajukan perizinan pada <strong>{new Date(item.startDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })} - {new Date(item.endDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</strong>
+                        </p>
                       ) : (
-                        <button
-                          onClick={() => setActiveRequestId(leave.id)}
-                          className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs py-2 px-4 rounded-xl transition-all"
-                        >
-                          Proses Pengajuan
-                        </button>
+                        <p className="text-xs text-ragda-text-secondary leading-relaxed">
+                          Mengajukan perjalanan dinas ke <strong>{item.destination}</strong> pada <strong>{new Date(item.startDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })} - {new Date(item.endDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</strong>
+                        </p>
                       )}
+                      <p className="text-xs text-ragda-text-muted italic">&ldquo;{item.reason || item.purpose}&rdquo;</p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          <div>
-            <h3 className="font-extrabold text-white text-md mb-4">Persetujuan Perjalanan Dinas</h3>
 
-            {pendingTravels.length === 0 ? (
-              <div className="p-12 text-center text-slate-500">
-                <CheckCircle2 className="w-12 h-12 text-emerald-500/20 mx-auto mb-3" />
-                <p className="font-semibold text-sm">Semua pengajuan dinas sudah diproses!</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {pendingTravels.map(travel => (
-                  <div key={travel.id} className="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row justify-between md:items-center gap-4">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{getEmployeeName(travel.employeeId)}</h4>
-                      <p className="text-xs text-slate-400 mt-1">Destinasi: <strong className="text-white">{travel.destination}</strong></p>
-                      <p className="text-xs text-slate-400 mt-0.5">Tujuan: {travel.purpose}</p>
-                      <div className="flex flex-wrap gap-4 mt-2 text-[10px] text-slate-500">
-                        <span>Tanggal: {travel.startDate} s/d {travel.endDate}</span>
-                        <span>Transport: {travel.transport}</span>
-                        <span className="text-amber-500 font-bold">Estimasi Budget: {formatRupiah(travel.budgetEstimate)}</span>
+                    {/* Extra detail for Travels */}
+                    {item.category === 'Travel' && (
+                      <div className="flex gap-4 text-[10px] text-ragda-text-subtle font-bold bg-slate-900/60 p-2 rounded-lg border border-ragda-border-subtle w-fit">
+                        <span>Transportasi: {item.transport}</span>
+                        <span>Estimasi Budget: Rp {item.estimatedBudget.toLocaleString('id-ID')}</span>
                       </div>
-                    </div>
+                    )}
 
-                    <div className="flex gap-2 shrink-0">
-                      <button
-                        onClick={() => processApproval('travel', travel.id, 'Approved')}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs py-2 px-4 rounded-xl transition-all"
-                      >
-                        Setujui
-                      </button>
-                      <button
-                        onClick={() => processApproval('travel', travel.id, 'Rejected')}
-                        className="bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs py-2 px-4 rounded-xl transition-all"
-                      >
-                        Tolak
-                      </button>
+                    {/* Feedback input field */}
+                    <div className="flex items-center gap-2 max-w-md">
+                      <MessageSquare className="w-4 h-4 text-ragda-text-muted shrink-0" />
+                      <input
+                        type="text"
+                        placeholder="Tambahkan catatan/feedback di sini..."
+                        value={feedback[item.id] || ''}
+                        onChange={(e) => handleFeedbackChange(item.id, e.target.value)}
+                        className="w-full bg-slate-900 border border-slate-800 text-[11px] text-white rounded-lg px-3 py-1.5 focus:outline-none focus:border-amber-500"
+                      />
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+
+                  {/* Actions */}
+                  <div className="flex sm:flex-row flex-col gap-2 shrink-0">
+                    <button
+                      onClick={() => item.category === 'Leave' ? handleRejectLeave(item.id) : handleRejectTravel(item.id)}
+                      className="px-4 py-2.5 rounded-xl border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-extrabold text-xs transition-colors uppercase tracking-wider flex items-center justify-center gap-1.5"
+                    >
+                      <XCircle className="w-4 h-4" />
+                      Tolak
+                    </button>
+                    <button
+                      onClick={() => item.category === 'Leave' ? handleApproveLeave(item.id) : handleApproveTravel(item.id)}
+                      className="px-4 py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-extrabold text-xs transition-colors uppercase tracking-wider flex items-center justify-center gap-1.5"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      Setujui
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
