@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ragda-primary: #0f172a;
+  --color-ragda-secondary: #1e293b;
+  --color-ragda-accent: #f59e0b;
+  --color-ragda-accent-hover: #d97706;
+  --color-ragda-success: #10b981;
+  --color-ragda-danger: #ef4444;
+  --color-ragda-card: #1e293b;
+  --color-ragda-border: #334155;
+  --color-ragda-light: #f8fafc;
+  --color-ragda-text-light: #f1f5f9;
+  --color-ragda-text-dark: #64748b;
+}
+
+body {
+  background-color: var(--color-ragda-primary);
+  color: var(--color-ragda-text-light);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-ragda-primary); }
+::-webkit-scrollbar-thumb { background: var(--color-ragda-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ragda-accent); }
+
+/* Animation overrides */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
