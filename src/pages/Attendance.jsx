@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
-import { Clock, Calendar, MapPin, CheckCircle, AlertCircle, FileSpreadsheet, Printer } from 'lucide-react';
+import { Clock, Calendar, MapPin, Printer } from 'lucide-react';
 
 export default function Attendance() {
   const { currentUser, attendance } = useApp();

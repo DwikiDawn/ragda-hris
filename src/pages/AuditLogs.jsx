@@ -1,5 +1,5 @@
 import { useApp } from '../context/AppContext';
-import { ShieldCheck, Calendar, Clock, User, Info } from 'lucide-react';
+import { ShieldCheck, User, Info } from 'lucide-react';
 
 export default function AuditLogs() {
   const { auditLogs } = useApp();

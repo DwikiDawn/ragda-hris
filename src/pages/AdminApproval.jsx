@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
-import { CheckCircle2, XCircle, FileText, Briefcase, Users, CalendarRange, Clock, Search, ShieldAlert, MessageSquare } from 'lucide-react';
+import { CheckCircle2, XCircle, CalendarRange, Clock, ShieldAlert, MessageSquare, Briefcase } from 'lucide-react';
 
 export default function AdminApproval() {
-  const { currentUser, leaves, travels, approveLeave, rejectLeave, approveTravel, rejectTravel } = useApp();
+  const { leaves, travels, processApproval, employees } = useApp();
   const [filterType, setFilterType] = useState('All'); // All, Leaves, Travels
   const [feedback, setFeedback] = useState({});
 
@@ -11,22 +11,22 @@ export default function AdminApproval() {
   const pendingTravels = useMemo(() => travels.filter(t => t.status === 'Pending'), [travels]);
 
   const handleApproveLeave = (id) => {
-    approveLeave(id, currentUser.name, feedback[id] || '');
+    processApproval('leave', id, 'Approved', feedback[id] || '');
     setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
   const handleRejectLeave = (id) => {
-    rejectLeave(id, currentUser.name, feedback[id] || '');
+    processApproval('leave', id, 'Rejected', feedback[id] || '');
     setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
   const handleApproveTravel = (id) => {
-    approveTravel(id, currentUser.name, feedback[id] || '');
+    processApproval('travel', id, 'Approved', feedback[id] || '');
     setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
   const handleRejectTravel = (id) => {
-    rejectTravel(id, currentUser.name, feedback[id] || '');
+    processApproval('travel', id, 'Rejected', feedback[id] || '');
     setFeedback(prev => ({ ...prev, [id]: '' }));
   };
 
@@ -131,7 +131,9 @@ export default function AdminApproval() {
                       <span className="text-[10px] font-extrabold uppercase bg-slate-900 border border-ragda-border-standard px-2.5 py-1 rounded-md text-white">
                         {item.category === 'Leave' ? `Leave: ${item.type}` : 'Travel'}
                       </span>
-                      <span className="text-xs text-white font-extrabold">{item.employeeName}</span>
+                      <span className="text-xs text-white font-extrabold">
+                        {employees.find(e => e.id === item.employeeId)?.name || 'Karyawan'}
+                      </span>
                       <span className="text-[10px] text-ragda-text-muted">({item.employeeId})</span>
                     </div>
 
@@ -152,7 +154,7 @@ export default function AdminApproval() {
                     {item.category === 'Travel' && (
                       <div className="flex gap-4 text-[10px] text-ragda-text-subtle font-bold bg-slate-900/60 p-2 rounded-lg border border-ragda-border-subtle w-fit">
                         <span>Transportasi: {item.transport}</span>
-                        <span>Estimasi Budget: Rp {item.estimatedBudget.toLocaleString('id-ID')}</span>
+                        <span>Estimasi Budget: Rp {(item.budgetEstimate || 0).toLocaleString('id-ID')}</span>
                       </div>
                     )}
 

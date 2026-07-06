@@ -4,7 +4,7 @@ import { Briefcase, Plus, FileText, CheckCircle, Clock, MapPin, DollarSign, XCir
 import { HOTSPOT_GEOFENCES } from '../data/mockData';
 
 export default function Travels() {
-  const { currentUser, travels, addTravel } = useApp();
+  const { currentUser, travels, submitTravel } = useApp();
   const [destination, setDestination] = useState('PT Sugity Creatives Bekasi');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -23,7 +23,14 @@ export default function Travels() {
 
     setIsSubmitting(true);
     setTimeout(() => {
-      addTravel(destination, startDate, endDate, purpose, transport, Number(estimatedBudget));
+      submitTravel({
+        destination,
+        startDate,
+        endDate,
+        purpose,
+        transport,
+        budgetEstimate: Number(estimatedBudget)
+      });
       setStartDate('');
       setEndDate('');
       setPurpose('');
@@ -207,7 +214,7 @@ export default function Travels() {
                         <span>Transport: {travel.transport}</span>
                         <span className="flex items-center gap-0.5 text-amber-500">
                           <DollarSign className="w-3.5 h-3.5" />
-                          {travel.estimatedBudget.toLocaleString('id-ID')}
+                          {(travel.budgetEstimate || 0).toLocaleString('id-ID')}
                         </span>
                       </div>
                       {travel.approvedBy && (

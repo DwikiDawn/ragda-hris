@@ -110,7 +110,7 @@ export function AppProvider({ children }) {
       status: 'Pending',
       submittedAt: new Date().toISOString(),
       approvedBy: '',
-      notes: '',
+      feedback: '',
       ...leaveData
     };
     setLeaves(prev => [newLeave, ...prev]);
@@ -125,6 +125,7 @@ export function AppProvider({ children }) {
       status: 'Pending',
       submittedAt: new Date().toISOString(),
       approvedBy: '',
+      feedback: '',
       ...travelData
     };
     setTravels(prev => [newTravel, ...prev]);
@@ -140,7 +141,7 @@ export function AppProvider({ children }) {
         if (item.id === requestId) {
           const emp = employees.find(e => e.id === item.employeeId);
           addAuditLog(`${action} Pengajuan Cuti/Izin`, `${emp?.name} - ${item.type}`);
-          return { ...item, status: action, approvedBy: currentUser.name, notes: notes };
+          return { ...item, status: action, approvedBy: currentUser.name, feedback: notes };
         }
         return item;
       }));
@@ -149,7 +150,7 @@ export function AppProvider({ children }) {
         if (item.id === requestId) {
           const emp = employees.find(e => e.id === item.employeeId);
           addAuditLog(`${action} Perjalanan Dinas`, `${emp?.name} - Tujuan: ${item.destination}`);
-          return { ...item, status: action, approvedBy: currentUser.name };
+          return { ...item, status: action, approvedBy: currentUser.name, feedback: notes };
         }
         return item;
       }));

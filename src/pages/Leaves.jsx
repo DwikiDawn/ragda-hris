@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Calendar, Plus, FileText, CheckCircle, Clock, XCircle, ShieldCheck } from 'lucide-react';
 
 export default function Leaves() {
-  const { currentUser, leaves, addLeave } = useApp();
+  const { currentUser, leaves, submitLeave } = useApp();
   const [leaveType, setLeaveType] = useState('Cuti');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -20,8 +20,20 @@ export default function Leaves() {
     if (!startDate || !endDate || !reason) return;
 
     setIsSubmitting(true);
+    // Calculate total days
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDiff = end.getTime() - start.getTime();
+    const totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+
     setTimeout(() => {
-      addLeave(leaveType, startDate, endDate, reason);
+      submitLeave({
+        type: leaveType,
+        startDate,
+        endDate,
+        totalDays,
+        reason
+      });
       setStartDate('');
       setEndDate('');
       setReason('');
