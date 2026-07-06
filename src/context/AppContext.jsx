@@ -10,13 +10,27 @@ import {
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
+  // Theme state: 'dark' or 'light'
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('hris-theme');
+    return saved ? saved : 'dark';
+  });
+
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('hris-auth-status') === 'true';
+  });
+
+  const [employees, setEmployees] = useState(() => {
+    const saved = localStorage.getItem('hris-employees');
+    return saved ? JSON.parse(saved) : INITIAL_EMPLOYEES;
+  });
+
   // Active User: defaults to Dwiki Darmawan (HR/Manager)
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem('hris-active-user');
     return saved ? JSON.parse(saved) : INITIAL_EMPLOYEES[0];
   });
-
-  const [employees] = useState(INITIAL_EMPLOYEES);
 
   const [attendance, setAttendance] = useState(() => {
     const saved = localStorage.getItem('hris-attendance');
@@ -38,6 +52,25 @@ export function AppProvider({ children }) {
     return saved ? JSON.parse(saved) : INITIAL_AUDIT_LOGS;
   });
 
+  // Apply theme to document
+  useEffect(() => {
+    localStorage.setItem('hris-theme', theme);
+    const root = window.document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem('hris-auth-status', isAuthenticated ? 'true' : 'false');
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    localStorage.setItem('hris-employees', JSON.stringify(employees));
+  }, [employees]);
+
   useEffect(() => {
     localStorage.setItem('hris-active-user', JSON.stringify(currentUser));
   }, [currentUser]);
@@ -58,10 +91,52 @@ export function AppProvider({ children }) {
     localStorage.setItem('hris-audit-logs', JSON.stringify(auditLogs));
   }, [auditLogs]);
 
-  // Switch User Profile
+  // Login action
+  const login = (email, password) => {
+    // Standard mock password checking (e.g. password = admin123 or matches email name)
+    const found = employees.find(e => e.email === email);
+    if (found && (password === 'admin123' || password === 'password' || password.toLowerCase() === found.name.split(' ')[0].toLowerCase())) {
+      setCurrentUser(found);
+      setIsAuthenticated(true);
+      addAuditLog('Login Sukses', `User ${found.name} login ke dalam sistem.`);
+      return { success: true };
+    }
+    return { success: false, message: 'Email atau password salah.' };
+  };
+
+  // Logout action
+  const logout = () => {
+    addAuditLog('Logout Sukses', `User ${currentUser.name} keluar dari sistem.`);
+    setIsAuthenticated(false);
+  };
+
+  // Toggle Theme
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  // Update Employee Role (RBAC)
+  const updateEmployeeRole = (empId, newRole) => {
+    setEmployees(prev => prev.map(emp => {
+      if (emp.id === empId) {
+        addAuditLog('Update Role Karyawan', `Mengubah role ${emp.name} menjadi ${newRole}`);
+        // If updating currently logged in user
+        if (currentUser.id === empId) {
+          setCurrentUser(prevUser => ({ ...prevUser, role: newRole }));
+        }
+        return { ...emp, role: newRole };
+      }
+      return emp;
+    }));
+  };
+
+  // Switch User Profile (for testing/demo convenience)
   const switchUser = (userId) => {
     const found = employees.find(e => e.id === userId);
-    if (found) setCurrentUser(found);
+    if (found) {
+      setCurrentUser(found);
+      addAuditLog('Simulasi Pindah Akun', `Profil dialihkan ke ${found.name}`);
+    }
   };
 
   // Add Audit Log Entry
@@ -69,7 +144,7 @@ export function AppProvider({ children }) {
     const newLog = {
       id: `log-${Date.now()}`,
       timestamp: new Date().toISOString(),
-      actor: currentUser.name,
+      actor: currentUser?.name || 'Sistem',
       action,
       target
     };
@@ -159,6 +234,11 @@ export function AppProvider({ children }) {
 
   return (
     <AppContext.Provider value={{
+      theme,
+      toggleTheme,
+      isAuthenticated,
+      login,
+      logout,
       currentUser,
       employees,
       attendance,
@@ -166,6 +246,7 @@ export function AppProvider({ children }) {
       travels,
       auditLogs,
       switchUser,
+      updateEmployeeRole,
       checkInUser,
       checkOutUser,
       submitLeave,

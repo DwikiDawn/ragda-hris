@@ -1,76 +1,113 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ragda-primary: #08090a;
-  --color-ragda-secondary: #0f1011;
-  --color-ragda-surface: #191a1b;
-  --color-ragda-surface-hover: rgba(255, 255, 255, 0.04);
-  --color-ragda-accent: #f59e0b;
-  --color-ragda-accent-hover: #d97706;
+  /* Corporate Corporate/Professional Ragdalion White & Blue (Light Theme) */
+  --color-ragda-primary: #f8fafc;
+  --color-ragda-secondary: #ffffff;
+  --color-ragda-surface: #ffffff;
+  --color-ragda-surface-hover: #f1f5f9;
+  --color-ragda-accent: #0066cc; /* Ragdalion Blue */
+  --color-ragda-accent-hover: #0052a3;
   --color-ragda-success: #10b981;
   --color-ragda-danger: #ef4444;
-  --color-ragda-text-primary: #f7f8f8;
-  --color-ragda-text-secondary: #d0d6e0;
-  --color-ragda-text-muted: #8a8f98;
-  --color-ragda-text-subtle: #62666d;
-  --color-ragda-border-subtle: rgba(255, 255, 255, 0.05);
-  --color-ragda-border-standard: rgba(255, 255, 255, 0.08);
+  --color-ragda-text-primary: #0f172a;
+  --color-ragda-text-secondary: #475569;
+  --color-ragda-text-muted: #64748b;
+  --color-ragda-text-subtle: #94a3b8;
+  --color-ragda-border-subtle: #e2e8f0;
+  --color-ragda-border-standard: #cbd5e1;
+  
+  /* Dark mode override (Default / Vibe styles) */
+  --color-dark-primary: #0f172a;
+  --color-dark-secondary: #1e293b;
+  --color-dark-surface: #1e293b;
+  --color-dark-surface-hover: rgba(255, 255, 255, 0.04);
+  --color-dark-accent: #38bdf8; /* Sky Blue accent for dark mode */
+  --color-dark-accent-hover: #0ea5e9;
+  --color-dark-text-primary: #f8fafc;
+  --color-dark-text-secondary: #cbd5e1;
+  --color-dark-text-muted: #94a3b8;
+  --color-dark-text-subtle: #64748b;
+  --color-dark-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-dark-border-standard: rgba(255, 255, 255, 0.08);
 }
 
+/* Base style resets */
 body {
   background-color: var(--color-ragda-primary);
   color: var(--color-ragda-text-primary);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-feature-settings: "cv01", "ss03";
   letter-spacing: -0.01em;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Typography Overrides */
-.display-title {
-  letter-spacing: -0.04em;
-  font-weight: 510;
-  line-height: 1.1;
+/* When dark mode (not having .light class, or explicitly defined body:not(.light)) */
+html:not(.light) body {
+  background-color: var(--color-dark-primary);
+  color: var(--color-dark-text-primary);
 }
 
-.heading-title {
-  letter-spacing: -0.02em;
-  font-weight: 590;
-  line-height: 1.2;
-}
-
-/* Translucent Cards & Surfaces */
-.glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--color-ragda-border-standard);
+/* Utilities depending on theme status */
+html:not(.light) .glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--color-dark-border-standard);
   backdrop-filter: blur(10px);
 }
-
-.glass-card-subtle {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid var(--color-ragda-border-subtle);
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-ragda-border-standard);
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
 }
 
+html:not(.light) .glass-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--color-dark-border-standard);
+  color: #ffffff;
+}
 .glass-input {
-  background: rgba(255, 255, 255, 0.02);
+  background: #ffffff;
   border: 1px solid var(--color-ragda-border-standard);
+  color: var(--color-ragda-text-primary);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+html:not(.light) .glass-input:focus {
+  border-color: var(--color-dark-accent);
+  box-shadow: 0 0 0 1px var(--color-dark-accent);
+}
 .glass-input:focus {
   border-color: var(--color-ragda-accent);
-  background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 0 0 1px var(--color-ragda-accent);
   outline: none;
 }
 
-/* Subtle Inset Shadows for Recessed Panels */
-.inset-panel {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset;
-  background: rgba(0, 0, 0, 0.2);
+/* Sidebar theme overrides */
+html:not(.light) aside {
+  background-color: var(--color-dark-secondary);
+  border-color: var(--color-dark-border-subtle);
+}
+aside {
+  background-color: var(--color-ragda-secondary);
+  border-color: var(--color-ragda-border-subtle);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-/* Custom scrollbar */
+html:not(.light) header {
+  background-color: var(--color-dark-secondary);
+  border-color: var(--color-dark-border-subtle);
+}
+header {
+  background-color: var(--color-ragda-secondary);
+  border-color: var(--color-ragda-border-subtle);
+}
+
+/* Custom scrollbars */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
+html:not(.light) ::-webkit-scrollbar-track { background: var(--color-dark-primary); }
 ::-webkit-scrollbar-track { background: var(--color-ragda-primary); }
+html:not(.light) ::-webkit-scrollbar-thumb { background: var(--color-dark-border-standard); }
 ::-webkit-scrollbar-thumb { background: var(--color-ragda-border-standard); border-radius: 4px; }
+html:not(.light) ::-webkit-scrollbar-thumb:hover { background: var(--color-dark-accent); }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-ragda-accent); }

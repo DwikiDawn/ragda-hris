@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
-import { Calendar, Clock, CheckCircle, Compass, ShieldAlert, ArrowRight, Check, Users, FileText, CheckCircle2, TrendingUp, AlertTriangle, ArrowUpRight } from 'lucide-react';
+import { Calendar, Clock, Compass, ShieldAlert, ArrowRight, Check, Users, FileText, CheckCircle2, TrendingUp, AlertTriangle, ArrowUpRight } from 'lucide-react';
 import { HOTSPOT_GEOFENCES } from '../data/mockData';
 import { useNavigate } from 'react-router-dom';
 
@@ -151,18 +151,17 @@ export default function Dashboard() {
   // Render HR/Manager Dashboard
   if (currentUser.role === 'HR/Manager') {
     return (
-      <div className="space-y-8 max-w-6xl mx-auto">
+      <div className="space-y-8 max-w-6xl mx-auto text-slate-900 dark:text-slate-100">
         {/* Welcome Banner */}
-        <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-standard bg-gradient-to-br from-slate-900 to-slate-950 shadow-2xl">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.06),rgba(255,255,255,0))]"></div>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-[100px]"></div>
+        <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-standard bg-white dark:bg-slate-800 shadow-2xl">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,102,204,0.06),rgba(255,255,255,0))]"></div>
           
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <span className="text-[10px] text-amber-500 font-extrabold uppercase tracking-widest bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+              <span className="text-[10px] text-ragda-accent dark:text-sky-400 font-extrabold uppercase tracking-widest bg-ragda-accent/10 dark:bg-sky-500/10 border border-ragda-accent/20 dark:border-sky-500/20 px-3 py-1 rounded-full">
                 HR Monitoring Dashboard
               </span>
-              <h2 className="text-3xl font-extrabold text-white mt-4 display-title tracking-tight">
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-4 display-title tracking-tight">
                 Selamat datang, {currentUser.name}
               </h2>
               <p className="text-ragda-text-muted text-xs mt-1.5 font-medium">
@@ -170,12 +169,12 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-950/60 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
-              <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-ragda-border-subtle">
-                <Calendar className="w-3.5 h-3.5 text-amber-500" /> {formattedDate}
+            <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
+              <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle text-slate-800 dark:text-slate-200">
+                <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedDate}
               </span>
-              <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-ragda-border-subtle font-mono font-bold">
-                <Clock className="w-3.5 h-3.5 text-amber-500" /> {formattedTime}
+              <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle font-mono font-bold text-slate-800 dark:text-slate-200">
+                <Clock className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedTime}
               </span>
             </div>
           </div>
@@ -183,46 +182,46 @@ export default function Dashboard() {
 
         {/* Headcount Stat Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-          <div className="glass-card rounded-2xl p-5 border border-ragda-border-subtle">
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-ragda-border-subtle">
             <span className="text-[9px] text-ragda-text-muted uppercase font-extrabold tracking-wider block">Total Karyawan</span>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-2xl font-black text-white font-mono">{hrData.activeEmployeesCount}</span>
-              <Users className="w-5 h-5 text-slate-500" />
+              <span className="text-2xl font-black text-slate-900 dark:text-white font-mono">{hrData.activeEmployeesCount}</span>
+              <Users className="w-5 h-5 text-slate-400" />
             </div>
-            <p className="text-[8px] text-slate-600 uppercase font-bold mt-2">Karyawan Aktif</p>
+            <p className="text-[8px] text-slate-500 uppercase font-bold mt-2">Karyawan Aktif</p>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 border border-emerald-500/10 bg-emerald-950/5">
-            <span className="text-[9px] text-emerald-400/80 uppercase font-extrabold tracking-wider block">Hadir (Tepat Waktu)</span>
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-500/5">
+            <span className="text-[9px] text-emerald-600 dark:text-emerald-400 uppercase font-extrabold tracking-wider block">Hadir (Tepat Waktu)</span>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-2xl font-black text-emerald-400 font-mono">{hrData.hadir}</span>
+              <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">{hrData.hadir}</span>
               <CheckCircle2 className="w-5 h-5 text-emerald-500/80" />
             </div>
             <p className="text-[8px] text-emerald-500/70 uppercase font-bold mt-2">Presensi Normal</p>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 border border-red-500/10 bg-red-950/5">
-            <span className="text-[9px] text-red-400/80 uppercase font-extrabold tracking-wider block">Terlambat</span>
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-red-500/10 dark:border-red-500/20 bg-red-500/5">
+            <span className="text-[9px] text-red-600 dark:text-red-400 uppercase font-extrabold tracking-wider block">Terlambat</span>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-2xl font-black text-red-400 font-mono">{hrData.terlambat}</span>
+              <span className="text-2xl font-black text-red-600 dark:text-red-400 font-mono">{hrData.terlambat}</span>
               <AlertTriangle className="w-5 h-5 text-red-500/80" />
             </div>
             <p className="text-[8px] text-red-500/70 uppercase font-bold mt-2">Melewati Jam 08:00</p>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 border border-amber-500/10 bg-amber-950/5">
-            <span className="text-[9px] text-amber-400/80 uppercase font-extrabold tracking-wider block">Perjalanan Dinas</span>
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-amber-500/10 dark:border-amber-500/20 bg-amber-500/5">
+            <span className="text-[9px] text-amber-600 dark:text-amber-500/80 uppercase font-extrabold tracking-wider block">Perjalanan Dinas</span>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-2xl font-black text-amber-400 font-mono">{hrData.dinasLuar}</span>
+              <span className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">{hrData.dinasLuar}</span>
               <Compass className="w-5 h-5 text-amber-500/80" />
             </div>
             <p className="text-[8px] text-amber-500/70 uppercase font-bold mt-2">Dinas / Visit Plant</p>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 border border-blue-500/10 bg-blue-950/5 col-span-2 lg:col-span-1">
-            <span className="text-[9px] text-blue-400/80 uppercase font-extrabold tracking-wider block">Cuti / Sakit / Izin</span>
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-blue-500/10 dark:border-blue-500/20 bg-blue-500/5 col-span-2 lg:col-span-1">
+            <span className="text-[9px] text-blue-600 dark:text-blue-400 uppercase font-extrabold tracking-wider block">Cuti / Sakit / Izin</span>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-2xl font-black text-blue-400 font-mono">{hrData.cutiSakit}</span>
+              <span className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">{hrData.cutiSakit}</span>
               <FileText className="w-5 h-5 text-blue-500/80" />
             </div>
             <p className="text-[8px] text-blue-500/70 uppercase font-bold mt-2">Approved Leaves</p>
@@ -232,26 +231,25 @@ export default function Dashboard() {
         {/* Core Double Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Trend Absensi Chart */}
-          <div className="glass-card rounded-3xl p-6 lg:col-span-2 shadow-xl relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-slate-800/10 rounded-full blur-2xl"></div>
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 lg:col-span-2 shadow-xl relative overflow-hidden flex flex-col justify-between">
             
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h3 className="text-sm font-extrabold text-white uppercase tracking-widest flex items-center gap-2">
-                  <TrendingUp className="w-4.5 h-4.5 text-amber-500" />
+                <h3 className="text-sm font-extrabold text-slate-800 dark:text-white uppercase tracking-widest flex items-center gap-2">
+                  <TrendingUp className="w-4.5 h-4.5 text-ragda-accent dark:text-sky-400" />
                   Tren Kehadiran (7 Hari Terakhir)
                 </h3>
-                <span className="text-[10px] text-slate-500 font-bold uppercase">Live Telemetry</span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Live Telemetry</span>
               </div>
 
               {/* Dynamic SVG Bar Chart */}
               <div className="relative pt-6">
                 <svg className="w-full h-56" viewBox="0 0 500 220">
                   {/* Grid Lines */}
-                  <line x1="40" y1="20" x2="480" y2="20" stroke="#1e293b" strokeDasharray="3 3" />
-                  <line x1="40" y1="70" x2="480" y2="70" stroke="#1e293b" strokeDasharray="3 3" />
-                  <line x1="40" y1="120" x2="480" y2="120" stroke="#1e293b" strokeDasharray="3 3" />
-                  <line x1="40" y1="170" x2="480" y2="170" stroke="#1e293b" />
+                  <line x1="40" y1="20" x2="480" y2="20" stroke="var(--color-ragda-border-subtle)" strokeDasharray="3 3" />
+                  <line x1="40" y1="70" x2="480" y2="70" stroke="var(--color-ragda-border-subtle)" strokeDasharray="3 3" />
+                  <line x1="40" y1="120" x2="480" y2="120" stroke="var(--color-ragda-border-subtle)" strokeDasharray="3 3" />
+                  <line x1="40" y1="170" x2="480" y2="170" stroke="var(--color-ragda-border-standard)" />
 
                   {/* Y Axis Labels */}
                   <text x="15" y="24" fill="#64748b" className="text-[10px] font-mono" textAnchor="middle">5</text>
@@ -268,10 +266,7 @@ export default function Dashboard() {
                     // Heights representing attendance types
                     const maxVal = 5;
                     const scale = 150 / maxVal;
-                    
-                    // Stacked bar calculations
                     const hHadir = Math.min(day.hadir, maxVal) * scale;
-
                     const isHovered = hoveredTrendIndex === idx;
 
                     return (
@@ -290,13 +285,13 @@ export default function Dashboard() {
                           fill="transparent"
                         />
 
-                        {/* Hadir Bar (Emerald) */}
+                        {/* Hadir Bar (Emerald/Corporate Blue depends on style) */}
                         <rect
                           x={startX}
                           y={170 - hHadir}
                           width={colWidth}
                           height={hHadir}
-                          fill={isHovered ? "#34d399" : "#10b981"}
+                          fill={isHovered ? "var(--color-ragda-accent)" : "var(--color-ragda-success)"}
                           className="transition-all duration-300"
                           rx="4"
                         />
@@ -309,7 +304,7 @@ export default function Dashboard() {
                             width={colWidth + 4}
                             height={hHadir + 4}
                             fill="none"
-                            stroke="#34d399"
+                            stroke="var(--color-ragda-accent)"
                             strokeWidth="1.5"
                             rx="6"
                           />
@@ -319,7 +314,7 @@ export default function Dashboard() {
                         <text
                           x={startX + colWidth / 2}
                           y="192"
-                          fill={isHovered ? "#f59e0b" : "#64748b"}
+                          fill={isHovered ? "var(--color-ragda-accent)" : "#64748b"}
                           className="text-[9px] font-bold"
                           textAnchor="middle"
                         >
@@ -333,32 +328,32 @@ export default function Dashboard() {
                 {/* Interactive Tooltip Card overlay */}
                 {hoveredTrendIndex !== null && (
                   <div
-                    className="absolute bg-slate-950 border border-amber-500/30 rounded-2xl p-4 shadow-2xl animate-fadeIn text-xs z-20 space-y-2 w-48"
+                    className="absolute bg-white dark:bg-slate-900 border border-ragda-accent/30 dark:border-sky-500/30 rounded-2xl p-4 shadow-2xl animate-fadeIn text-xs z-20 space-y-2 w-48 text-slate-800 dark:text-slate-100"
                     style={{
                       left: `${40 + hoveredTrendIndex * 60}px`,
                       top: `-10px`,
                       transform: 'translateX(-25%)'
                     }}
                   >
-                    <p className="font-extrabold text-white text-[10px] border-b border-slate-800 pb-1 uppercase tracking-wider">
+                    <p className="font-extrabold text-slate-900 dark:text-white text-[10px] border-b border-slate-200 dark:border-slate-800 pb-1 uppercase tracking-wider">
                       {hrData.trendDays[hoveredTrendIndex].label}
                     </p>
                     <div className="space-y-1 font-mono text-[10px]">
                       <div className="flex justify-between items-center">
-                        <span className="text-emerald-400">Hadir Normal:</span>
-                        <span className="font-extrabold text-white">{Math.round(hrData.trendDays[hoveredTrendIndex].hadir)}</span>
+                        <span className="text-emerald-500">Hadir Normal:</span>
+                        <span className="font-extrabold">{Math.round(hrData.trendDays[hoveredTrendIndex].hadir)}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-amber-400">Dinas Luar:</span>
-                        <span className="font-extrabold text-white">{hrData.trendDays[hoveredTrendIndex].dinasLuar}</span>
+                        <span className="text-amber-500">Dinas Luar:</span>
+                        <span className="font-extrabold">{hrData.trendDays[hoveredTrendIndex].dinasLuar}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-red-400">Terlambat:</span>
-                        <span className="font-extrabold text-white">{hrData.trendDays[hoveredTrendIndex].terlambat}</span>
+                        <span className="text-red-500">Terlambat:</span>
+                        <span className="font-extrabold">{hrData.trendDays[hoveredTrendIndex].terlambat}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-500">Alpha / Tanpa Ket:</span>
-                        <span className="font-extrabold text-white">{hrData.trendDays[hoveredTrendIndex].alpha}</span>
+                        <span className="text-slate-400">Alpha / Tanpa Ket:</span>
+                        <span className="font-extrabold">{hrData.trendDays[hoveredTrendIndex].alpha}</span>
                       </div>
                     </div>
                   </div>
@@ -366,7 +361,7 @@ export default function Dashboard() {
               </div>
 
               {/* Legend Indicators */}
-              <div className="flex flex-wrap justify-center gap-6 pt-4 border-t border-slate-800/60 text-[10px] text-ragda-text-subtle font-bold">
+              <div className="flex flex-wrap justify-center gap-6 pt-4 border-t border-ragda-border-subtle text-[10px] text-ragda-text-subtle font-bold">
                 <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-sm"></span> Hadir Tepat Waktu</span>
                 <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-amber-500 rounded-sm"></span> Dinas Luar (Travel)</span>
                 <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-sm"></span> Terlambat</span>
@@ -375,30 +370,30 @@ export default function Dashboard() {
           </div>
 
           {/* Pending Actions Panel */}
-          <div className="glass-card rounded-3xl p-6 shadow-xl space-y-6 flex flex-col justify-between">
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
               <h3 className="text-xs font-extrabold text-ragda-text-muted uppercase tracking-widest">
                 Persetujuan Tertunda
               </h3>
 
               {hrData.pendingActions.length === 0 ? (
-                <div className="py-12 text-center text-slate-600 bg-slate-950/40 border border-ragda-border-subtle rounded-2xl">
+                <div className="py-12 text-center text-slate-500 bg-slate-50 dark:bg-slate-900/40 border border-ragda-border-subtle rounded-2xl">
                   <CheckCircle2 className="w-10 h-10 text-emerald-500/20 mx-auto mb-2" />
                   <p className="font-semibold text-[10px] uppercase tracking-wider">Semua Pengajuan Bersih</p>
                 </div>
               ) : (
                 <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
                   {hrData.pendingActions.slice(0, 3).map((act, idx) => (
-                    <div key={idx} className="bg-slate-950/60 border border-ragda-border-subtle p-3 rounded-xl space-y-1.5 hover:border-slate-700 transition-colors">
+                    <div key={idx} className="bg-slate-55 dark:bg-slate-950/60 border border-ragda-border-subtle p-3 rounded-xl space-y-1.5 hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
                       <div className="flex justify-between items-center">
-                        <span className="text-[8px] font-extrabold uppercase bg-slate-900 px-2 py-0.5 border border-ragda-border-standard rounded text-amber-500">
+                        <span className="text-[8px] font-extrabold uppercase bg-slate-200 dark:bg-slate-900 px-2 py-0.5 border border-ragda-border-standard rounded text-ragda-accent dark:text-sky-400">
                           {act.typeCat === 'Leave' ? act.type : 'Dinas Luar'}
                         </span>
-                        <span className="text-[9px] font-mono text-slate-500">
+                        <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
                           {new Date(act.submittedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
                         </span>
                       </div>
-                      <p className="text-[11px] font-extrabold text-white leading-tight">
+                      <p className="text-[11px] font-extrabold text-slate-900 dark:text-white leading-tight">
                         {employees.find(e => e.id === act.employeeId)?.name || 'Karyawan'}
                       </p>
                       <p className="text-[10px] text-ragda-text-muted italic truncate">&ldquo;{act.reason || act.purpose}&rdquo;</p>
@@ -410,7 +405,7 @@ export default function Dashboard() {
 
             <button
               onClick={() => navigate('/admin')}
-              className="w-full flex items-center justify-between p-4 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs rounded-2xl transition-all duration-200 group uppercase tracking-wider"
+              className="w-full flex items-center justify-between p-4 bg-ragda-accent hover:bg-ragda-accent-hover text-white font-extrabold text-xs rounded-2xl transition-all duration-200 group uppercase tracking-wider shadow-md"
             >
               <span>Portal Approval HR</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -421,19 +416,19 @@ export default function Dashboard() {
     );
   }
 
+  // Render Employee Dashboard (Original)
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
+    <div className="space-y-8 max-w-6xl mx-auto text-slate-900 dark:text-slate-100">
       {/* Welcome Banner */}
-      <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-standard bg-gradient-to-br from-slate-900 to-slate-950 shadow-2xl">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.06),rgba(255,255,255,0))]"></div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-[100px]"></div>
+      <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-standard bg-white dark:bg-slate-800 shadow-2xl">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,102,204,0.06),rgba(255,255,255,0))]"></div>
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <span className="text-[10px] text-amber-500 font-extrabold uppercase tracking-widest bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+            <span className="text-[10px] text-ragda-accent dark:text-sky-400 font-extrabold uppercase tracking-widest bg-ragda-accent/10 dark:bg-sky-500/10 border border-ragda-accent/20 dark:border-sky-500/20 px-3 py-1 rounded-full">
               Portal Kehadiran
             </span>
-            <h2 className="text-3xl font-extrabold text-white mt-4 display-title tracking-tight">
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-4 display-title tracking-tight">
               Selamat datang, {currentUser.name}
             </h2>
             <p className="text-ragda-text-muted text-xs mt-1.5 font-medium">
@@ -441,12 +436,12 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-950/60 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
-            <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-ragda-border-subtle">
-              <Calendar className="w-3.5 h-3.5 text-amber-500" /> {formattedDate}
+          <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
+            <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle text-slate-800 dark:text-slate-200">
+              <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedDate}
             </span>
-            <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-ragda-border-subtle font-mono font-bold">
-              <Clock className="w-3.5 h-3.5 text-amber-500" /> {formattedTime}
+            <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle font-mono font-bold text-slate-800 dark:text-slate-200">
+              <Clock className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedTime}
             </span>
           </div>
         </div>
@@ -456,12 +451,11 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Presensi Check-In Card */}
-        <div className="glass-card rounded-3xl p-6 lg:col-span-2 flex flex-col justify-between shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-slate-800/10 rounded-full blur-2xl"></div>
+        <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 lg:col-span-2 flex flex-col justify-between shadow-xl relative overflow-hidden">
           
           <div className="relative z-10 space-y-6">
-            <h3 className="text-sm font-extrabold text-white uppercase tracking-widest flex items-center gap-2">
-              <Compass className="w-4.5 h-4.5 text-amber-500" />
+            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-widest flex items-center gap-2">
+              <Compass className="w-4.5 h-4.5 text-ragda-accent dark:text-sky-400" />
               Pencatatan Presensi
             </h3>
 
@@ -477,8 +471,8 @@ export default function Dashboard() {
                     onClick={() => handleLocationSelect('Head Office Cikarang')}
                     className={`flex items-center justify-between text-left p-3.5 rounded-xl border text-xs font-semibold transition-all duration-200 ${
                       selectedLocation === 'Head Office Cikarang'
-                        ? 'bg-amber-500/10 border-amber-500/40 text-amber-500'
-                        : 'bg-slate-950/60 border-ragda-border-subtle text-ragda-text-muted hover:border-ragda-border-standard hover:text-white'
+                        ? 'bg-ragda-accent/10 dark:bg-sky-500/10 border-ragda-accent dark:border-sky-400 text-ragda-accent dark:text-sky-450'
+                        : 'bg-slate-50 dark:bg-slate-950/60 border-ragda-border-subtle text-ragda-text-muted hover:border-ragda-border-standard hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     <span>📍 Head Office Cikarang</span>
@@ -490,8 +484,8 @@ export default function Dashboard() {
                       onClick={() => handleLocationSelect(hs.name)}
                       className={`flex items-center justify-between text-left p-3.5 rounded-xl border text-xs font-semibold transition-all duration-200 ${
                         selectedLocation === hs.name
-                          ? 'bg-amber-500/10 border-amber-500/40 text-amber-500'
-                          : 'bg-slate-950/60 border-ragda-border-subtle text-ragda-text-muted hover:border-ragda-border-standard hover:text-white'
+                          ? 'bg-ragda-accent/10 dark:bg-sky-500/10 border-ragda-accent dark:border-sky-400 text-ragda-accent dark:text-sky-450'
+                          : 'bg-slate-50 dark:bg-slate-950/60 border-ragda-border-subtle text-ragda-text-muted hover:border-ragda-border-standard hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       <span className="truncate">🏢 {hs.name}</span>
@@ -500,28 +494,28 @@ export default function Dashboard() {
                   ))}
                 </div>
 
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-950/40 border border-ragda-border-subtle text-[10px] text-ragda-text-muted">
-                  <ShieldAlert className="w-4 h-4 text-amber-500 shrink-0" />
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-ragda-border-subtle text-[10px] text-ragda-text-muted">
+                  <ShieldAlert className="w-4 h-4 text-ragda-accent dark:text-sky-450 shrink-0" />
                   <span>Sistem memvalidasi lokasi GPS Anda. Status saat ini: <strong>{isWithinOffice ? 'Di dalam perimeter Kantor' : 'Perjalanan Dinas'}</strong>.</span>
                 </div>
               </div>
             ) : (
               // Status Done Screen
-              <div className="bg-slate-950/40 border border-ragda-border-subtle rounded-2xl p-6 text-center">
-                <div className="inline-flex p-3 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 mb-3 animate-pulse-slow">
-                  <CheckCircle className="w-8 h-8" />
+              <div className="bg-slate-50 dark:bg-slate-950/40 border border-ragda-border-subtle rounded-2xl p-6 text-center">
+                <div className="inline-flex p-3 bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 rounded-full border border-emerald-500/20 mb-3 animate-pulse-slow">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h4 className="font-extrabold text-white text-sm">Presensi Ter-record dengan Sukses</h4>
+                <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">Presensi Ter-record dengan Sukses</h4>
                 <p className="text-[11px] text-ragda-text-muted mt-1">Presensi diverifikasi di {todayRecord.location}</p>
 
                 <div className="grid grid-cols-2 gap-4 mt-6 max-w-xs mx-auto text-xs">
-                  <div className="bg-slate-900 border border-ragda-border-subtle p-3.5 rounded-xl">
+                  <div className="bg-white dark:bg-slate-900 border border-ragda-border-subtle p-3.5 rounded-xl">
                     <p className="text-[9px] text-ragda-text-muted font-bold uppercase tracking-wider">Check In</p>
-                    <p className="text-white font-extrabold font-mono text-sm mt-1.5">{todayRecord.checkIn}</p>
+                    <p className="text-slate-900 dark:text-white font-extrabold font-mono text-sm mt-1.5">{todayRecord.checkIn}</p>
                   </div>
-                  <div className="bg-slate-900 border border-ragda-border-subtle p-3.5 rounded-xl">
+                  <div className="bg-white dark:bg-slate-900 border border-ragda-border-subtle p-3.5 rounded-xl">
                     <p className="text-[9px] text-ragda-text-muted font-bold uppercase tracking-wider">Check Out</p>
-                    <p className="text-white font-extrabold font-mono text-sm mt-1.5">{todayRecord.checkOut || '-- : --'}</p>
+                    <p className="text-slate-900 dark:text-white font-extrabold font-mono text-sm mt-1.5">{todayRecord.checkOut || '-- : --'}</p>
                   </div>
                 </div>
               </div>
@@ -532,7 +526,7 @@ export default function Dashboard() {
             {!todayRecord ? (
               <button
                 onClick={handleCheckIn}
-                className="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs py-4 rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/15 uppercase tracking-wider"
+                className="flex-1 bg-ragda-accent hover:bg-ragda-accent-hover text-white font-extrabold text-xs py-4 rounded-xl transition-all duration-300 shadow-lg shadow-ragda-accent/15 uppercase tracking-wider"
               >
                 CHECK-IN MASUK PRESENSI
               </button>
@@ -540,7 +534,7 @@ export default function Dashboard() {
               <button
                 onClick={handleCheckOut}
                 disabled={!!todayRecord.checkOut}
-                className="flex-1 bg-slate-800 border border-ragda-border-standard hover:bg-slate-700 text-white font-extrabold text-xs py-4 rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed uppercase tracking-wider"
+                className="flex-1 bg-slate-100 dark:bg-slate-800 border border-ragda-border-standard hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-extrabold text-xs py-4 rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed uppercase tracking-wider"
               >
                 {todayRecord.checkOut ? 'Check-Out Selesai' : 'CHECK-OUT PULANG'}
               </button>
@@ -551,7 +545,7 @@ export default function Dashboard() {
         {/* Right Column Grid (Shortcuts & Security) */}
         <div className="space-y-6 flex flex-col justify-between">
           {/* Quick Actions Shortcuts */}
-          <div className="glass-card rounded-3xl p-6 shadow-xl space-y-4">
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
             <h3 className="text-[10px] font-extrabold text-ragda-text-muted uppercase tracking-widest">
               Aktivitas Lainnya
             </h3>
@@ -559,32 +553,31 @@ export default function Dashboard() {
             <div className="space-y-3">
               <button
                 onClick={() => navigate('/leaves')}
-                className="w-full flex items-center justify-between p-4 bg-slate-950/60 hover:bg-ragda-surface-hover rounded-2xl border border-ragda-border-subtle text-left transition-all duration-200 group"
+                className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950/60 hover:bg-ragda-surface-hover rounded-2xl border border-ragda-border-subtle text-left transition-all duration-200 group"
               >
                 <div>
-                  <h4 className="text-xs font-bold text-white group-hover:text-amber-500 transition-colors">Ajukan Cuti / Sakit</h4>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-ragda-accent dark:group-hover:text-sky-400 transition-colors">Ajukan Cuti / Sakit</h4>
                   <p className="text-[10px] text-ragda-text-muted mt-1">Sakit, cuti tahunan, urusan penting</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-ragda-text-muted group-hover:text-amber-500 transition-colors" />
+                <ArrowRight className="w-4 h-4 text-ragda-text-muted group-hover:text-ragda-accent dark:group-hover:text-sky-450 transition-colors" />
               </button>
 
               <button
                 onClick={() => navigate('/travels')}
-                className="w-full flex items-center justify-between p-4 bg-slate-950/60 hover:bg-ragda-surface-hover rounded-2xl border border-ragda-border-subtle text-left transition-all duration-200 group"
+                className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950/60 hover:bg-ragda-surface-hover rounded-2xl border border-ragda-border-subtle text-left transition-all duration-200 group"
               >
                 <div>
-                  <h4 className="text-xs font-bold text-white group-hover:text-amber-500 transition-colors">Perjalanan Dinas</h4>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-ragda-accent dark:group-hover:text-sky-400 transition-colors">Perjalanan Dinas</h4>
                   <p className="text-[10px] text-ragda-text-muted mt-1">Visit plant customer atau dinas</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-ragda-text-muted group-hover:text-amber-500 transition-colors" />
+                <ArrowRight className="w-4 h-4 text-ragda-text-muted group-hover:text-ragda-accent dark:group-hover:text-sky-450 transition-colors" />
               </button>
             </div>
           </div>
 
           {/* Compliance & ISMS Card */}
-          <div className="glass-card rounded-3xl p-6 shadow-xl relative overflow-hidden flex-1 flex flex-col justify-center">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-[40px]"></div>
-            <h3 className="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 mb-3">
+          <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl relative overflow-hidden flex-1 flex flex-col justify-center">
+            <h3 className="text-xs font-extrabold text-ragda-accent dark:text-sky-450 uppercase tracking-widest flex items-center gap-1.5 mb-3">
               <ShieldAlert className="w-4 h-4" />
               ISMS ISO 27001
             </h3>
