@@ -24,7 +24,7 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen bg-ragda-primary dark:bg-slate-900 flex flex-col md:flex-row text-ragda-text-primary dark:text-slate-100 selection:bg-ragda-accent/20 selection:text-ragda-accent transition-colors duration-200">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-72 bg-ragda-secondary dark:bg-slate-800 border-r border-ragda-border-subtle flex-col justify-between shrink-0 sticky top-0 h-screen z-30">
+      <aside className="hidden md:flex w-72 bg-ragda-secondary dark:bg-slate-950 border-r border-ragda-border-subtle flex-col justify-between shrink-0 sticky top-0 h-screen z-30">
         <div className="p-6 flex flex-col h-full justify-between">
           <div>
             {/* Co-Branding Logo */}
@@ -63,7 +63,7 @@ export default function Layout({ children }) {
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-200 ${
                       active
                         ? 'bg-ragda-accent text-white shadow-lg shadow-ragda-accent/25'
-                        : 'text-ragda-text-muted hover:bg-ragda-surface-hover hover:text-slate-900 dark:hover:text-white'
+                        : 'text-ragda-text-muted hover:bg-ragda-surface-hover hover:text-slate-900 dark:hover:text-white dark:hover:bg-slate-900'
                     }`}
                   >
                     <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-white' : 'text-ragda-text-muted'}`} />
@@ -151,7 +151,7 @@ export default function Layout({ children }) {
       </aside>
 
       {/* Header - Mobile */}
-      <header className="md:hidden bg-ragda-secondary dark:bg-slate-800 border-b border-ragda-border-subtle p-4 sticky top-0 z-50 flex items-center justify-between transition-colors">
+      <header className="md:hidden bg-ragda-secondary dark:bg-slate-950 border-b border-ragda-border-subtle p-4 sticky top-0 z-50 flex items-center justify-between transition-colors">
         <div className="flex items-center gap-2" onClick={() => navigate('/')}>
           <div className="bg-ragda-accent/10 border border-ragda-accent/30 p-1.5 rounded-lg text-ragda-accent">
             <Shield className="w-4 h-4" />
@@ -188,7 +188,7 @@ export default function Layout({ children }) {
 
         {/* Mobile Navigation Links */}
         {mobileOpen && (
-          <div className="absolute top-full left-0 right-0 bg-ragda-secondary dark:bg-slate-800 border-b border-ragda-border-subtle p-4 space-y-1 shadow-2xl flex flex-col animate-fadeIn">
+          <div className="absolute top-full left-0 right-0 bg-ragda-secondary dark:bg-slate-950 border-b border-ragda-border-subtle p-4 space-y-1 shadow-2xl flex flex-col animate-fadeIn">
             {menuItems.map((item, idx) => {
               if (item.role !== 'All' && currentUser.role !== item.role) return null;
               const Icon = item.icon;
@@ -199,7 +199,7 @@ export default function Layout({ children }) {
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-bold transition-all ${
                     isActive(item.path)
                       ? 'bg-ragda-accent text-white'
-                      : 'text-ragda-text-muted hover:bg-ragda-surface-hover'
+                      : 'text-ragda-text-muted hover:bg-ragda-surface-hover dark:hover:bg-slate-900'
                   }`}
                 >
                   <Icon className="w-4 h-4 shrink-0" />

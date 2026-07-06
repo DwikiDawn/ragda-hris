@@ -153,8 +153,8 @@ export default function Dashboard() {
     return (
       <div className="space-y-8 max-w-6xl mx-auto text-slate-900 dark:text-slate-100">
         {/* Welcome Banner */}
-        <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-standard bg-white dark:bg-slate-800 shadow-2xl">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,102,204,0.06),rgba(255,255,255,0))]"></div>
+        <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-subtle bg-white dark:bg-slate-900 shadow-2xl">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(15,98,254,0.06),rgba(255,255,255,0))]"></div>
           
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
@@ -169,12 +169,12 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
+            <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
               <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle text-slate-800 dark:text-slate-200">
-                <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedDate}
+                <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-450" /> {formattedDate}
               </span>
               <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle font-mono font-bold text-slate-800 dark:text-slate-200">
-                <Clock className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedTime}
+                <Clock className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-450" /> {formattedTime}
               </span>
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function Dashboard() {
 
         {/* Headcount Stat Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-ragda-border-subtle">
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-2xl p-5 border border-ragda-border-subtle">
             <span className="text-[9px] text-ragda-text-muted uppercase font-extrabold tracking-wider block">Total Karyawan</span>
             <div className="flex items-center justify-between mt-2">
               <span className="text-2xl font-black text-slate-900 dark:text-white font-mono">{hrData.activeEmployeesCount}</span>
@@ -191,7 +191,7 @@ export default function Dashboard() {
             <p className="text-[8px] text-slate-500 uppercase font-bold mt-2">Karyawan Aktif</p>
           </div>
 
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-500/5">
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-2xl p-5 border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-500/5">
             <span className="text-[9px] text-emerald-600 dark:text-emerald-400 uppercase font-extrabold tracking-wider block">Hadir (Tepat Waktu)</span>
             <div className="flex items-center justify-between mt-2">
               <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">{hrData.hadir}</span>
@@ -200,8 +200,8 @@ export default function Dashboard() {
             <p className="text-[8px] text-emerald-500/70 uppercase font-bold mt-2">Presensi Normal</p>
           </div>
 
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-red-500/10 dark:border-red-500/20 bg-red-500/5">
-            <span className="text-[9px] text-red-600 dark:text-red-400 uppercase font-extrabold tracking-wider block">Terlambat</span>
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-2xl p-5 border border-red-500/10 dark:border-red-500/20 bg-red-500/5">
+            <span className="text-[9px] text-red-650 dark:text-red-400 uppercase font-extrabold tracking-wider block">Terlambat</span>
             <div className="flex items-center justify-between mt-2">
               <span className="text-2xl font-black text-red-600 dark:text-red-400 font-mono">{hrData.terlambat}</span>
               <AlertTriangle className="w-5 h-5 text-red-500/80" />
@@ -209,8 +209,8 @@ export default function Dashboard() {
             <p className="text-[8px] text-red-500/70 uppercase font-bold mt-2">Melewati Jam 08:00</p>
           </div>
 
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-amber-500/10 dark:border-amber-500/20 bg-amber-500/5">
-            <span className="text-[9px] text-amber-600 dark:text-amber-500/80 uppercase font-extrabold tracking-wider block">Perjalanan Dinas</span>
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-2xl p-5 border border-amber-500/10 dark:border-amber-500/20 bg-amber-500/5">
+            <span className="text-[9px] text-amber-650 dark:text-amber-500/80 uppercase font-extrabold tracking-wider block">Perjalanan Dinas</span>
             <div className="flex items-center justify-between mt-2">
               <span className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">{hrData.dinasLuar}</span>
               <Compass className="w-5 h-5 text-amber-500/80" />
@@ -218,8 +218,8 @@ export default function Dashboard() {
             <p className="text-[8px] text-amber-500/70 uppercase font-bold mt-2">Dinas / Visit Plant</p>
           </div>
 
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-blue-500/10 dark:border-blue-500/20 bg-blue-500/5 col-span-2 lg:col-span-1">
-            <span className="text-[9px] text-blue-600 dark:text-blue-400 uppercase font-extrabold tracking-wider block">Cuti / Sakit / Izin</span>
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-2xl p-5 border border-blue-500/10 dark:border-blue-500/20 bg-blue-500/5 col-span-2 lg:col-span-1">
+            <span className="text-[9px] text-blue-650 dark:text-blue-400 uppercase font-extrabold tracking-wider block">Cuti / Sakit / Izin</span>
             <div className="flex items-center justify-between mt-2">
               <span className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">{hrData.cutiSakit}</span>
               <FileText className="w-5 h-5 text-blue-500/80" />
@@ -231,7 +231,7 @@ export default function Dashboard() {
         {/* Core Double Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Trend Absensi Chart */}
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 lg:col-span-2 shadow-xl relative overflow-hidden flex flex-col justify-between">
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-3xl p-6 lg:col-span-2 shadow-xl relative overflow-hidden flex flex-col justify-between">
             
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -252,10 +252,10 @@ export default function Dashboard() {
                   <line x1="40" y1="170" x2="480" y2="170" stroke="var(--color-ragda-border-standard)" />
 
                   {/* Y Axis Labels */}
-                  <text x="15" y="24" fill="#64748b" className="text-[10px] font-mono" textAnchor="middle">5</text>
-                  <text x="15" y="74" fill="#64748b" className="text-[10px] font-mono" textAnchor="middle">3</text>
-                  <text x="15" y="124" fill="#64748b" className="text-[10px] font-mono" textAnchor="middle">1</text>
-                  <text x="15" y="174" fill="#64748b" className="text-[10px] font-mono" textAnchor="middle">0</text>
+                  <text x="15" y="24" fill="currentColor" className="text-[10px] font-mono text-slate-400 dark:text-slate-500" textAnchor="middle">5</text>
+                  <text x="15" y="74" fill="currentColor" className="text-[10px] font-mono text-slate-400 dark:text-slate-500" textAnchor="middle">3</text>
+                  <text x="15" y="124" fill="currentColor" className="text-[10px] font-mono text-slate-400 dark:text-slate-500" textAnchor="middle">1</text>
+                  <text x="15" y="174" fill="currentColor" className="text-[10px] font-mono text-slate-400 dark:text-slate-500" textAnchor="middle">0</text>
 
                   {/* Render Columns */}
                   {hrData.trendDays.map((day, idx) => {
@@ -314,8 +314,8 @@ export default function Dashboard() {
                         <text
                           x={startX + colWidth / 2}
                           y="192"
-                          fill={isHovered ? "var(--color-ragda-accent)" : "#64748b"}
-                          className="text-[9px] font-bold"
+                          fill="currentColor"
+                          className={`text-[9px] font-bold ${isHovered ? "text-ragda-accent dark:text-sky-400" : "text-slate-400 dark:text-slate-500"}`}
                           textAnchor="middle"
                         >
                           {day.label}
@@ -370,7 +370,7 @@ export default function Dashboard() {
           </div>
 
           {/* Pending Actions Panel */}
-          <div className="glass-card bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl space-y-6 flex flex-col justify-between">
+          <div className="glass-card bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
               <h3 className="text-xs font-extrabold text-ragda-text-muted uppercase tracking-widest">
                 Persetujuan Tertunda

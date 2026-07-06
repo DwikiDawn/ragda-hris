@@ -27,7 +27,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-ragda-primary dark:bg-slate-900 flex items-center justify-center p-4 selection:bg-ragda-accent/20 selection:text-ragda-accent">
-      <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-ragda-border-subtle p-8 space-y-6 relative overflow-hidden transition-all duration-300">
+      <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-3xl shadow-xl border border-ragda-border-subtle p-8 space-y-6 relative overflow-hidden transition-all duration-300">
         
         {/* Branding */}
         <div className="flex flex-col items-center text-center space-y-3">
