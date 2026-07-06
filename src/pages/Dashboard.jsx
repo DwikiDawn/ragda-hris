@@ -153,7 +153,7 @@ export default function Dashboard() {
     return (
       <div className="space-y-8 max-w-6xl mx-auto text-slate-900 dark:text-slate-100">
         {/* Welcome Banner */}
-        <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-subtle bg-white dark:bg-slate-900 shadow-2xl">
+        <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-subtle bg-white dark:bg-slate-950 shadow-2xl">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(15,98,254,0.06),rgba(255,255,255,0))]"></div>
           
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -171,10 +171,10 @@ export default function Dashboard() {
 
             <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
               <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle text-slate-800 dark:text-slate-200">
-                <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-450" /> {formattedDate}
+                <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedDate}
               </span>
               <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle font-mono font-bold text-slate-800 dark:text-slate-200">
-                <Clock className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-450" /> {formattedTime}
+                <Clock className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedTime}
               </span>
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function Dashboard() {
                           y={170 - hHadir}
                           width={colWidth}
                           height={hHadir}
-                          fill={isHovered ? "var(--color-ragda-accent)" : "var(--color-ragda-success)"}
+                          fill={isHovered ? "var(--color-ragda-accent)" : "#10b981"}
                           className="transition-all duration-300"
                           rx="4"
                         />
@@ -420,8 +420,8 @@ export default function Dashboard() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto text-slate-900 dark:text-slate-100">
       {/* Welcome Banner */}
-      <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-standard bg-white dark:bg-slate-800 shadow-2xl">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,102,204,0.06),rgba(255,255,255,0))]"></div>
+      <div className="relative rounded-3xl p-6 md:p-8 overflow-hidden border border-ragda-border-subtle bg-white dark:bg-slate-950 shadow-2xl">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(15,98,254,0.06),rgba(255,255,255,0))]"></div>
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
@@ -436,7 +436,7 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
+          <div className="flex gap-3 text-xs text-ragda-text-secondary bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl border border-ragda-border-subtle shrink-0">
             <span className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-ragda-border-subtle text-slate-800 dark:text-slate-200">
               <Calendar className="w-3.5 h-3.5 text-ragda-accent dark:text-sky-400" /> {formattedDate}
             </span>
